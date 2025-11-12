@@ -268,17 +268,23 @@ public class GameGUI extends JComponent
   {
     double px = playerLoc.getX();
     double py = playerLoc.getY();
-
+    
     for (Rectangle p: prizes)
     {
-      // DEBUG: System.out.println("prizex:" + p.getX() + " prizey:" + p.getY() + "\npx: " + px + " py:" + py);
-      // if location has a prize, pick it up
-      if (p.getWidth() > 0 && p.contains(px, py))
+
+      if (p.getWidth() > 0)
       {
-        System.out.println("YOU PICKED UP A PRIZE!");
-        p.setSize(0,0);
-        repaint();
-        return prizeVal;
+        double prizeX = p.getX();
+        double prizeY = p.getY();
+        
+        // Check if player is within 5 pixels of the prize on all sides
+        if (Math.abs(px - prizeX) <= 20 && Math.abs(py - prizeY) <= 20)
+        {
+          System.out.println("YOU PICKED UP A PRIZE!");
+          p.setSize(0,0);
+          repaint();
+          return prizeVal;
+        }
       }
     }
     System.out.println("OOPS, NO PRIZE HERE");
